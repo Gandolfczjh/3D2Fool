@@ -1,4 +1,4 @@
-## overview
+## Overview
 This is the official repository for the paper [Physical 3D Adversarial Attacks against Monocular Depth Estimation in Autonomous Driving](http://arxiv.org/abs/2403.17301) accepted by CVPR2024.
 
 ## Abstract
@@ -6,3 +6,32 @@ Deep learning-based monocular depth estimation (MDE), extensively applied in aut
 
 ## Framework
 ![image-framework](https://github.com/Gandolfczjh/3D2Fool/blob/main/framework.png)
+
+## Code
+```
+python attack_base.py
+```
+* data_loader_mde.py
+  > class MyDataset: load training set
+  > > data_dir: rgb background images path
+  > > obj_name: car model path
+  > > camou_mask: mask path (the texture area to attack)
+  > > tex_trans_flag: TC flag
+  > > phy_trans_flag: PA flag
+  > > self.set_textures(self, camou): camou is texture seed
+* attack_base.py
+  > camou_mask: camouflage texture mask path
+  > camou_shape: shape of camouflage texture
+  > obj_name: car model path
+  > train_dir: rgb background images
+  > log_dir: result save path
+
+## Citation
+```
+@inproceedings{zheng2024p,
+  title={Physical 3D Adversarial Attacks against Monocular Depth Estimation in Autonomous Driving},
+  author={Zheng, Junhao and Lin, Chenhao and Sun, Jiahao and Zhao, Zhengyu and Li, Qian and Shen, Chao},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2024}
+}
+```
