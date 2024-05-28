@@ -20,11 +20,11 @@ python attack_base.py
   > + phy_trans_flag: PA flag
   > + self.set_textures(self, camou): camou is texture seed
 * attack_base.py
-  > camou_mask: camouflage texture mask path
-  > camou_shape: shape of camouflage texture
-  > obj_name: car model path
-  > train_dir: rgb background images
-  > log_dir: result save path
+  > + camou_mask: camouflage texture mask path
+  > + camou_shape: shape of camouflage texture
+  > + obj_name: car model path
+  > + train_dir: rgb background images
+  > + log_dir: result save path
 
 ## Citation
 ```
