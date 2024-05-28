@@ -9,6 +9,7 @@ Deep learning-based monocular depth estimation (MDE), extensively applied in aut
 
 ## Code
 ```
+pip install -r requirements.txt
 python attack_base.py
 ```
 * data_loader_mde.py
@@ -25,6 +26,10 @@ python attack_base.py
   > + obj_name: car model path
   > + train_dir: rgb background images
   > + log_dir: result save path
+
+## Acknowledgements
+* MDE_Attack - [**Paper**](https://arxiv.org/pdf/2207.04718)
+| [Source Code](https://github.com/Bob-cheng/MDE_Attack)
 
 ## Citation
 ```
