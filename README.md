@@ -13,12 +13,12 @@ python attack_base.py
 ```
 * data_loader_mde.py
   > class MyDataset: load training set
-  > > data_dir: rgb background images path
-  > > obj_name: car model path
-  > > camou_mask: mask path (the texture area to attack)
-  > > tex_trans_flag: TC flag
-  > > phy_trans_flag: PA flag
-  > > self.set_textures(self, camou): camou is texture seed
+  > + data_dir: rgb background images path
+  > + obj_name: car model path
+  > + camou_mask: mask path (the texture area to attack)
+  > + tex_trans_flag: TC flag
+  > + phy_trans_flag: PA flag
+  > + self.set_textures(self, camou): camou is texture seed
 * attack_base.py
   > camou_mask: camouflage texture mask path
   > camou_shape: shape of camouflage texture
