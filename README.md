@@ -20,6 +20,7 @@ python attack_base.py
   > + tex_trans_flag: TC flag
   > + phy_trans_flag: PA flag
   > + self.set_textures(self, camou): camou is texture seed
+  > + camera_pos: camera relative position in carla
 * attack_base.py
   > + camou_mask: camouflage texture mask path
   > + camou_shape: shape of camouflage texture
