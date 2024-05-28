@@ -92,24 +92,7 @@ def loss_smooth(img):
     s1 = torch.pow(img[:, :, 1:, :-1] - img[:, :, :-1, :-1], 2)
     s2 = torch.pow(img[:, :, :-1, 1:] - img[:, :, :-1, :-1], 2)
     return torch.square(torch.sum(s1 + s2))
-
-def loss_adv_adpative(disp, disp0, mask):
-    scaler=5.4
-    dep=torch.clamp(disp_to_depth(torch.abs(disp.detach()),0.1,100)[1]*mask.unsqueeze(0)*scaler,max=50)
-    dep0=torch.clamp(disp_to_depth(torch.abs(disp0.detach()),0.1,100)[1]*mask.unsqueeze(0)*scaler,max=50)
-    low = torch.ones_like(dep) * 1
-    high = torch.ones_like(dep) * 1.5
-    atk_mask = torch.where((dep0-dep)<=10, high, low)
-    return torch.sum(torch.pow(disp*atk_mask*mask,2))/torch.sum(mask)
-
-def loss_adv_adpative_1(disp, disp0, mask):
-    scaler=5.4
-    dep=torch.clamp(disp_to_depth(torch.abs(disp.detach()),0.1,100)[1]*mask.unsqueeze(0)*scaler,max=50)
-    dep0=torch.clamp(disp_to_depth(torch.abs(disp0.detach()),0.1,100)[1]*mask.unsqueeze(0)*scaler,max=50)
-    low = torch.ones_like(dep) * 1.5
-    high = torch.ones_like(dep) * 1.5
-    atk_mask = torch.where((dep0-dep)<=10, high, low)
-    return torch.sum(torch.pow(disp*atk_mask*mask,2))/torch.sum(mask)
+    
 
 def loss_nps(img, color_set):
     # img: [batch_size, h, w, 3]
@@ -120,13 +103,6 @@ def loss_nps(img, color_set):
     color_set1 = color_set.unsqueeze(1).unsqueeze(1).unsqueeze(0)
     gap = torch.min(torch.sum(torch.abs(img1 - color_set1), -1), 1).values
     return torch.sum(gap)/h/w
-
-def loss_bi(clr_w,h,w):
-    clr_w1 = 1 - torch.where((clr_w>0.6), 1, 0) * clr_w
-    if torch.sum(clr_w1)>0:
-        return (torch.sqrt(torch.sum(torch.pow(clr_w, 2))) + torch.sum(torch.sqrt(torch.pow(clr_w1, 2))))/h/w
-    else:
-        return (torch.sqrt(torch.sum(torch.pow(clr_w, 2))))/h/w
 
 
 def attack(args):
@@ -152,7 +128,6 @@ def attack(args):
     for para in depth_model.parameters():
         para.requires_grad_(False)
 
-    
     feed_height = loaded_dict_enc['height']
     feed_width = loaded_dict_enc['width']
     input_resize = transforms.Resize([feed_height, feed_width])
@@ -224,7 +199,6 @@ def attack(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--camou", type=str, default='./car/camou.png', help="camouflage texture image")
     parser.add_argument("--camou_mask", type=str, default='./car/mask.jpg', help="camouflage texture mask")
     parser.add_argument("--camou_shape", type=int, default=1024, help="shape of camouflage texture")
     parser.add_argument("--obj_name", type=str, default='./car/lexus_hs.obj')
@@ -233,7 +207,7 @@ if __name__ == '__main__':
     parser.add_argument("--img_size", type=tuple, default=(320, 1024))
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--lr", type=int, default=0.01)
-    parser.add_argument("--log_dir", type=str, default='./res/res_nost/')
+    parser.add_argument("--log_dir", type=str, default='./res/')
     args = parser.parse_args()
     attack(args)
     
