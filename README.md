@@ -34,10 +34,12 @@ python attack_base.py
 
 ## Citation
 ```
-@inproceedings{zheng2024p,
-  title={Physical 3D Adversarial Attacks against Monocular Depth Estimation in Autonomous Driving},
-  author={Zheng, Junhao and Lin, Chenhao and Sun, Jiahao and Zhao, Zhengyu and Li, Qian and Shen, Chao},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  year={2024}
+@InProceedings{Zheng_2024_CVPR,
+    author    = {Zheng, Junhao and Lin, Chenhao and Sun, Jiahao and Zhao, Zhengyu and Li, Qian and Shen, Chao},
+    title     = {Physical 3D Adversarial Attacks against Monocular Depth Estimation in Autonomous Driving},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {24452-24461}
 }
 ```
