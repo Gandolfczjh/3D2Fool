@@ -28,6 +28,11 @@ python attack_base.py
   > + train_dir: rgb background images
   > + log_dir: result save path
 
+## training dataset
+* [BaiduNetdisk Link](https://pan.baidu.com/s/1IiD0HYRKjoNOx-hIsamHbg?pwd=3D2F)
+  > ./rgb/*.jpg: background images
+  > ./ann.pkl: camera position matrix
+
 ## Acknowledgements
 * MDE_Attack - [**Paper**](https://arxiv.org/pdf/2207.04718)
 | [Source Code](https://github.com/Bob-cheng/MDE_Attack)
