@@ -30,8 +30,8 @@ python attack_base.py
 
 ## training dataset
 * [BaiduNetdisk Link](https://pan.baidu.com/s/1IiD0HYRKjoNOx-hIsamHbg?pwd=3D2F)
-  > ./rgb/*.jpg: background images
-  > ./ann.pkl: camera position matrix
+  > + ./rgb/*.jpg: background images
+  > + ./ann.pkl: camera position matrix
 
 ## Acknowledgements
 * MDE_Attack - [**Paper**](https://arxiv.org/pdf/2207.04718)
