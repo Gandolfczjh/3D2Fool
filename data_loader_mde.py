@@ -315,37 +315,46 @@ class MyDataset(Dataset):
     def __getitem__(self, index):
         # self.files[index] = 'Town02_w2_0l_cam2.jpg'
         # print(self.files[index])
+
+        # load camera parameters
         eye = self.ann[self.files[index]]['camera_pos'].copy()
         # eye = np.array([-4, -2.5, 1.3])
         eye[0] *= -1
         for i in range(3):
             eye[i] *= 20
         camera_up = (0, 0, 1)
-
+        # caculate R, T matrix for camera
         R, T = look_at_view_transform(eye=(tuple(eye),), up=(tuple(camera_up),), at=((0, 0, 10),))
-
         self.cameras = FoVPerspectiveCameras(device=self.device, R=R, T=T, znear=1.0, zfar=300.0, fov=45.0)
-
+        # create point lights
         self.renderer.shader.lights=PointLights(device=self.device, location=[eye])
+        # create materials for rendering
         self.materials = Materials(
             device=self.device,
             specular_color=[[1.0, 1.0, 1.0]],
             shininess=500.0
         )
+        # loading camera for the renderer
         self.renderer.rasterizer.cameras=self.cameras
         self.renderer.shader.cameras=self.cameras
+
+        # rendering the adversarial vehicle image with white background
         imgs_pred1 = self.renderer(self.mesh, materials=self.materials)[:, ..., :3]
         imgs_pred1 = imgs_pred1.permute(0, 3, 1, 2)   # [1, 3, 320, 1024]
 
         self.mesh0 = self.mesh.clone()
         self.mesh0.textures = TexturesUV(verts_uvs=[self.verts_uvs], faces_uvs=[self.faces_uvs], maps=self.camou0)
+        # rendering the clean vehicle image with white background
         imgs_pred0 = self.renderer(self.mesh0, materials=self.materials)[:, ..., :3]
         imgs_pred0 = imgs_pred0.permute(0, 3, 1, 2)   # [1, 3, 320, 1024]
+
+        # using Physical Augmentation or EoT
         if self.phy_trans_flag:
             imgs_pred11, imgs_pred00 = self.phy_trans(imgs_pred1, imgs_pred0, index)
         else:
             imgs_pred11, imgs_pred00 = self.EoT(imgs_pred1, imgs_pred0, index)
 
+        # loading background image sampling from Carla simulator
         file_path = os.path.join(self.data_dir, self.files[index])
         # file_path = '/data/zjh/mde_carla/rgb/Town04_w2_0l_cam2.jpg'
         img = cv2.imread(file_path)  # [640, 1600, 3] bgr
@@ -356,6 +365,7 @@ class MyDataset(Dataset):
         img = torch.from_numpy(img).cuda(device=self.device).float()
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
         
+        # obtaining the vehicle mask to get the final adv-img and clean-img
         contour = torch.where((imgs_pred1 == 1), torch.zeros(1).to(self.device), torch.ones(1).to(self.device))
         total_img = torch.where((contour == 0.), img, imgs_pred11)  # [1, 3, 320, 1024]
         total_img0 = torch.where((contour == 0.), img, imgs_pred00) # [1, 3, 320, 1024]
