@@ -89,9 +89,10 @@ def get_affected_ratio(disp1, disp2, scene_car_mask):
 
 
 def loss_smooth(img):
+    b, c, w, h = img.shape
     s1 = torch.pow(img[:, :, 1:, :-1] - img[:, :, :-1, :-1], 2)
     s2 = torch.pow(img[:, :, :-1, 1:] - img[:, :, :-1, :-1], 2)
-    return torch.square(torch.sum(s1 + s2))
+    return torch.square(torch.sum(s1 + s2)) / (b*c*w*h)
     
 
 def loss_nps(img, color_set):
@@ -101,7 +102,7 @@ def loss_nps(img, color_set):
     color_num, c = color_set.shape
     img1 = img.unsqueeze(1)
     color_set1 = color_set.unsqueeze(1).unsqueeze(1).unsqueeze(0)
-    gap = torch.min(torch.sum(torch.abs(img1 - color_set1), -1), 1).values
+    gap = torch.min(torch.sum(torch.abs(img1 - color_set1)/255, -1), 1).values
     return torch.sum(gap)/h/w
 
 
@@ -180,7 +181,7 @@ def attack(args):
 
             outputs0 = depth_model(input_image0)
             mask = input_resize(mask)[:, 0, :, :]
-            adv_loss = torch.sum(torch.pow(outputs*mask,2))/torch.sum(mask)
+            adv_loss = torch.sum(10 * torch.pow(outputs*mask,2))/torch.sum(mask)
             tv_loss = loss_smooth(camou_para) * 1e-1
             nps_loss = loss_nps(camou_para, color_set) * 5
             loss = tv_loss + adv_loss + nps_loss
