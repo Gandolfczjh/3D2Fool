@@ -28,8 +28,9 @@ python attack_base.py
   > + train_dir: rgb background images
   > + log_dir: result save path
 
-## training dataset
-* [BaiduNetdisk Link](https://pan.baidu.com/s/1IiD0HYRKjoNOx-hIsamHbg?pwd=3D2F)
+## Dataset
+* [BaiduNetdisk](https://pan.baidu.com/s/1IiD0HYRKjoNOx-hIsamHbg?pwd=3D2F)
+* [GoogleDrive](https://drive.google.com/drive/folders/1nFNuS_ZMjA955cIj4dmTdjW1f5w4_H1g?usp=drive_link).
   > + ./rgb/*.jpg: background images
   > + ./ann.pkl: camera position matrix
 
