@@ -1,6 +1,5 @@
 <h3  align="center">⚔️ Physical 3D Adversarial Attacks against Monocular Depth Estimation in Autonomous Driving</h3>
 <p align="center">
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=Gandolfczjh.3D2Fool" alt="访客统计" />
   <img src="https://img.shields.io/github/stars/Gandolfczjh/3D2Fool?style=social" alt="GitHub stars" />
   <img alt="Static Badge" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" />
 </p>
